@@ -1,0 +1,27 @@
+
+.idea
+*.ipynb
+*.py[oc]
+
+# ignore the C++ binary
+bh_tsne
+den_sne
+
+# ignore data files
+*.txt
+*.tsv
+*.npy
+*.csv
+*.dat
+
+# ignore auto-saved stuff
+*~
+\#*\#
+*.png
+\#*
+
+# ignore build folder
+densmap/build/lib/densmap/
+
+# allow datasets
+!*trial_data.txt
