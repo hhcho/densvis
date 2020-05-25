@@ -1,5 +1,5 @@
-if(!require("reticulate")) install.packages("reticulate")
-if(!require("optparse")) install.packages("optparse")
+if(!require("reticulate")) install.packages("reticulate", dependencies = TRUE, INSTALL_opts = '--no-lock')
+# if(!require("optparse")) install.packages("optparse", dependencies = TRUE, INSTALL_opts = '--no-lock')
 
 library("reticulate")
 # install.packages("optparse")
