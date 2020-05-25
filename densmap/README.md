@@ -15,7 +15,7 @@ Our code currently does not support the latest version of numba (0.49.0).
 
 ### Install Options
 
-PyPI installation of densMAP, assuming all dependencies are installed, can be performed as:
+PyPI installation of densMAP can be performed as:
 
 ```bash
 pip install densmap-learn
@@ -124,6 +124,33 @@ An example of making use of these options:
 embedding, ro, re = densmap.densMAP(n_neighbors=25, n_epochs=500, dens_frac=0.3,
                                     dens_lambda=0.5).fit_transform(data)
 ```
+### R wrapper
+
+We use the `reticulate` library to provide compatibility with R as well with the 
+script `densmap.R`. Since `reticulate` runs Python code with an R wrapper, to use this 
+library you must have Python3 installed and run 
+```bash
+pip install densmap-learn
+```
+as above. 
+
+From then, within your R script, you can run
+```R
+# data is an R dataframe
+source("densmap.R")
+
+out <- densMAP(as.matrix(data))
+
+```
+The R function `densMAP` takes the same optional arguments listed in Input Arguments section 
+above with the same names and default values. So you can, for example, run: 
+```R
+out <- densMAP(as.matrix(data), n_neighbors=25, n_epochs=500, dens_frac=0.3, dens_lambda=0.5)
+```
+If `final_dens` is `TRUE` then `out[[1]]` will contain the embedding, `out[[2]]` will be the 
+log original local radii, and `out[[3]]` the log embedding local radii. 
+
+If `final_dens` is `FALSE` then `out` will be the embeddings itself. 
 
 ### From the command line
 
