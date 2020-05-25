@@ -128,11 +128,8 @@ embedding, ro, re = densmap.densMAP(n_neighbors=25, n_epochs=500, dens_frac=0.3,
 
 We use the `reticulate` library to provide compatibility with R as well with the 
 script `densmap.R`. Since `reticulate` runs Python code with an R wrapper, to use this 
-library you must have Python3 installed and run 
-```bash
-pip install densmap-learn
-```
-as above. 
+library you must have Python3 installed. The script will automatically install the
+`densmap-learn` package via `pip` if it is not installed. 
 
 From then, within your R script, you can run
 ```R

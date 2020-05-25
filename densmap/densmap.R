@@ -5,6 +5,12 @@ library("reticulate")
 # install.packages("optparse")
 library("optparse")
 
+# Installs densMAP via pip
+if(reticulate::py_module_available('densmap')) { 
+    sys <- reticulate::import('sys')
+    sbp <- reticulate::import('subprocess')
+    sbp$check_call(c(sys$executable, "-m", "pip", "install", 'densmap-learn'))
+} 
 
 densMAP <- function(data, n_neighbors, n_epochs, ndim, dens_frac, dens_lambda, final_dens, var_shift, metric, min_dist,verbose) { 
     if(missing(n_neighbors)) { 
