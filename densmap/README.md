@@ -136,8 +136,9 @@ as above.
 
 From then, within your R script, you can run
 ```R
-# data is an R dataframe
 source("densmap.R")
+
+# Assume `data` is an R dataframe, needs to be converted to a matrix
 
 out <- densMAP(as.matrix(data))
 

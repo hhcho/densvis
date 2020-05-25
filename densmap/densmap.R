@@ -5,6 +5,7 @@ library("reticulate")
 # install.packages("optparse")
 library("optparse")
 
+
 densMAP <- function(data, n_neighbors, n_epochs, ndim, dens_frac, dens_lambda, final_dens, var_shift, metric, min_dist,verbose) { 
     if(missing(n_neighbors)) { 
         n_neighbors <- 30
