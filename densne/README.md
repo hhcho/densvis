@@ -79,8 +79,8 @@ data <- read.table("trial_data.txt", sep=" ")
 
 source("densne.R")
 
-out <- run_densne(data, no_dims=2, perplexity=50, theta=0.5, rand_seed=-1,
-                  verbose=False, initial_dims=None, use_pca=FALSE,
+out <- run_densne(data, no_dims=2, perplexity=50, theta=0.5, randseed=-1,
+                  verbose=FALSE, use_pca=FALSE,
                   max_iter=1000, dens_frac=0.3, final_dens=TRUE)
 ```
 The parameters in R are the same as in Python. If `final_dens` is true, `out` will be a list, where
