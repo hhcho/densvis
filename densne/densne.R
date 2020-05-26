@@ -82,7 +82,8 @@ run_densne <- function(data, no_dims, initial_dims, perplexity, theta, randseed,
         final_dens <- TRUE
     }
 
-    workdir <- tempdir()
+    workdir <- paste(getwd(), 'tmp', sep='/')
+    # workdir <- tempdir()
     
     init_densne(data, workdir, no_dims, initial_dims, perplexity, theta, randseed, verbose, max_iter, 
                 dens_frac, dens_lambda, final_dens)
