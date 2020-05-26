@@ -964,17 +964,33 @@ bool DENSNE::load_data(double** data, int* n, int* d, int* no_dims, double* thet
   fread(perplexity, sizeof(double), 1, h);                                // perplexity
   fread(no_dims, sizeof(int), 1, h);                                      // output dimensionality
   fread(max_iter, sizeof(int),1,h);                                       // maximum number of iterations
+
+  printf("Printing: %i, %i, %f, %f, %i, %i\n", *n, *d,*theta,*perplexity,*no_dims,*max_iter);
   
   // densne
   fread(dens_frac, sizeof(double),1,h);               // fraction of iters with density objective
   fread(dens_lambda, sizeof(double),1,h);               // regularization weight for density objective
+  
   char flag;
   fread(&flag, sizeof(char),1,h);               // whether to output final densities
   *final_dens = (flag != 0);
 
   fread(&flag, sizeof(char),1,h);               // Initial embedding provided
   bool init_emb_flag = flag != 0;
+  
+  /*
+  int flag;
+  fread(&flag, sizeof(int),1,h);               // whether to output final densities
+  *final_dens = (flag != 0);
 
+  fread(&flag, sizeof(int),1,h);               // Initial embedding provided
+  bool init_emb_flag = flag != 0;
+  */
+  printf("Flags: %f, %f, %i, %i (true  is %i, false is %i)\n",
+	 *dens_frac, *dens_lambda, *final_dens, init_emb_flag, true, false);
+
+
+  printf("Sizeof: int, %i ; double, %i ; char, %i\n", sizeof(int), sizeof(double), sizeof(char)); 
   *data = (double*) malloc(*d * *n * sizeof(double));
   if(*data == NULL) { printf("Memory allocation failed!\n"); exit(1); }
   fread(*data, sizeof(double), *n * *d, h);                               // the data

@@ -48,6 +48,10 @@ int main() {
     if(Y == NULL || costs == NULL) { printf("Memory allocation failed!\n"); exit(1); }
     if(final_dens && dens == NULL) { printf("Memory allocation failed!\n"); exit(1); }
 
+    printf("Testing data:\n");
+    printf("data last, %f, %f\n", data[0], data[(N)*(D)-1]); 
+
+    
     DENSNE::run(data, N, D, Y, dens, no_dims, perplexity, theta, rand_seed, skip_rand_init,
         max_iter, 250, 250, dens_frac, dens_lambda, final_dens);
 

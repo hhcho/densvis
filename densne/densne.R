@@ -4,7 +4,7 @@ init_densne <- function(data, workdir, no_dims, initial_dims, perplexity, theta,
                         randseed, verbose, max_iter, dens_frac, dens_lambda,
                         final_dens) {
 
-    # print(final_dens)
+    print(final_dens)
     write_binary_file(data, paste(workdir,"data.dat",sep="/"), theta, perplexity,
                       no_dims, max_iter, dens_frac, dens_lambda, final_dens, randseed)
 }
@@ -79,7 +79,7 @@ run_densne <- function(data, no_dims, initial_dims, perplexity, theta, randseed,
         dens_lambda <- .1
     }
     if(missing(final_dens)) { 
-        final_dens <- TRUE
+        final_dens <- FALSE
     }
 
     workdir <- paste(getwd(), 'tmp', sep='/')
@@ -102,11 +102,19 @@ write_binary_file <- function(matrix, path.to.bin.file, theta, perplexity,
     writeBin(as.double(c(theta, perplexity)), connection, size=8)
     writeBin(as.integer(c(no_dims, max_iter)), connection)
     writeBin(as.double(c(dens_frac, dens_lambda)), connection, size=8)
-    writeBin(as.character(c(final_dens, FALSE)), connection)
+    # writeBin(as.character(c(as.integer(final_dens), 0)), connection, size=1)
+    # writeBin(as.integer(final_dens), connection)
+
+    writeBin(as.logical(final_dens), connection, size=1)
+    writeBin(as.logical(FALSE), connection, size=1)
     
-    
+    # writeBin(as.integer(FALSE), connection)
+
+    print("blah")
     for(i in 1:nrow(matrix)){
-        writeBin(as.double(matrix[i,]),connection)
+        for(j in 1:ncol(matrix)) { 
+            writeBin(as.double(matrix[i,j]),connection, size=8)
+	}
     }
     if(randseed != -1) { 
         writeBin(as.integer(randseed), connection)
