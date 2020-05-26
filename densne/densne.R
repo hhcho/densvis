@@ -4,7 +4,7 @@ init_densne <- function(data, workdir, no_dims, initial_dims, perplexity, theta,
                         randseed, verbose, max_iter, dens_frac, dens_lambda,
                         final_dens) {
 
-    print(final_dens)
+    # print(final_dens)
     write_binary_file(data, paste(workdir,"data.dat",sep="/"), theta, perplexity,
                       no_dims, max_iter, dens_frac, dens_lambda, final_dens, randseed)
 }
@@ -14,19 +14,56 @@ densne <- function(workdir, verbose) {
     exec_path = paste(basedir, 'den_sne', sep='/')
     
     setwd(workdir)
-    system(exec_path, intern=verbose, ignore.stdout=TRUE)
+    #system(exec_path, intern=verbose)
+    system2(exec_path, stdout=FALSE, stderr="")
     setwd(basedir)
     
-    outfile <- paste(workdir, "result.dat", sep='/')
+    
+    output <- read_result(workdir)
+    # outfile <- paste(workdir, "result.dat", sep='/')
+    
+    # Read out the results
+    #connection = file(outfile,"rb")
+    # Dimensions
+    #dims <- readBin(connection, integer(), n=2)
+    
+    # Final Dens Flag
+    #final_dens <- readBin(connection, logical(), n=1)
+    #print(final_dens)
+    # Read out the results
+    #total_coords <- dims[[1]]*dims[[2]]
+    #emb_vec <- readBin(connection, double(), n=total_coords)
+    
+    #embedding <- matrix(data=emb_vec, nrow=dims[[1]], ncol=2, byrow=TRUE)
+    
+    #if(!final_dens) { 
+    #    return(embedding)
+    #}
+    
+    #dens_vec <- readBin(connection, double(), n=2)
+    #
+    #dens <- matrix(data=emb_vec, nrow=dims[[1]], ncol=2, byrow=TRUE)
+    
+    #ro <- dens(,1)
+    #re <- dens(,2)
+    
+    #output <- list(embedding, ro, re)
+    
+    return(output)
+}
+read_result <- function(workdir) {
+    outfile <- paste(workdir, "result.dat", sep="/")
     
     # Read out the results
     connection = file(outfile,"rb")
     # Dimensions
-    dims <- readBin(connection, integer(), n=2)
+    dims <- readBin(connection, integer(), n=2,size=4)
+    # print(dims)
     
     # Final Dens Flag
-    fdf <- readBin(connection, character(), n=1)
+    final_dens <- readBin(connection, logical(), n=1,size=1)
     
+    # print(final_dens)
     # Read out the results
     total_coords <- dims[[1]]*dims[[2]]
     emb_vec <- readBin(connection, double(), n=total_coords)
@@ -34,21 +71,21 @@ densne <- function(workdir, verbose) {
     embedding <- matrix(data=emb_vec, nrow=dims[[1]], ncol=2, byrow=TRUE)
     
     if(!final_dens) { 
+        close(connection)
         return(embedding)
     }
     
-    dens_vec <- readBin(connection, double(), n=2)
+    dens_vec <- readBin(connection, double(), n=dims[[1]]*2)
     
-    dens <- matrix(data=emb_vec, nrow=dims[[1]], ncol=2, byrow=TRUE)
+    dens <- matrix(data=dens_vec, nrow=dims[[1]], ncol=2, byrow=TRUE)
     
-    ro <- dens(,1)
-    re <- dens(,2)
+    ro <- dens[,1]
+    re <- dens[,2]
     
     output <- list(embedding, ro, re)
-    
+    close(connection)
     return(output)
 }
-
 run_densne <- function(data, no_dims, initial_dims, perplexity, theta, randseed, 
                        verbose, max_iter, dens_frac, dens_lambda, final_dens) {     
     if(missing(no_dims)) { 
@@ -110,7 +147,7 @@ write_binary_file <- function(matrix, path.to.bin.file, theta, perplexity,
     
     # writeBin(as.integer(FALSE), connection)
 
-    print("blah")
+    # print("blah")
     for(i in 1:nrow(matrix)){
         for(j in 1:ncol(matrix)) { 
             writeBin(as.double(matrix[i,j]),connection, size=8)
