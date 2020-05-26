@@ -4,7 +4,6 @@ init_densne <- function(data, workdir, no_dims, initial_dims, perplexity, theta,
                         randseed, verbose, max_iter, dens_frac, dens_lambda,
                         final_dens) {
 
-    # print(final_dens)
     write_binary_file(data, paste(workdir,"data.dat",sep="/"), theta, perplexity,
                       no_dims, max_iter, dens_frac, dens_lambda, final_dens, randseed)
 }
@@ -14,40 +13,11 @@ densne <- function(workdir, verbose) {
     exec_path = paste(basedir, 'den_sne', sep='/')
     
     setwd(workdir)
-    #system(exec_path, intern=verbose)
     system2(exec_path, stdout=FALSE, stderr="")
     setwd(basedir)
     
     
     output <- read_result(workdir)
-    # outfile <- paste(workdir, "result.dat", sep='/')
-    
-    # Read out the results
-    #connection = file(outfile,"rb")
-    # Dimensions
-    #dims <- readBin(connection, integer(), n=2)
-    
-    # Final Dens Flag
-    #final_dens <- readBin(connection, logical(), n=1)
-    #print(final_dens)
-    # Read out the results
-    #total_coords <- dims[[1]]*dims[[2]]
-    #emb_vec <- readBin(connection, double(), n=total_coords)
-    
-    #embedding <- matrix(data=emb_vec, nrow=dims[[1]], ncol=2, byrow=TRUE)
-    
-    #if(!final_dens) { 
-    #    return(embedding)
-    #}
-    
-    #dens_vec <- readBin(connection, double(), n=2)
-    #
-    #dens <- matrix(data=emb_vec, nrow=dims[[1]], ncol=2, byrow=TRUE)
-    
-    #ro <- dens(,1)
-    #re <- dens(,2)
-    
-    #output <- list(embedding, ro, re)
     
     return(output)
 }
@@ -58,12 +28,9 @@ read_result <- function(workdir) {
     connection = file(outfile,"rb")
     # Dimensions
     dims <- readBin(connection, integer(), n=2,size=4)
-    # print(dims)
-    
-    # Final Dens Flag
+    # Final_Dens Flag
     final_dens <- readBin(connection, logical(), n=1,size=1)
     
-    # print(final_dens)
     # Read out the results
     total_coords <- dims[[1]]*dims[[2]]
     emb_vec <- readBin(connection, double(), n=total_coords)
@@ -132,10 +99,7 @@ run_densne <- function(data, no_dims, perplexity, theta, randseed,
         }
     }
     
-    print(dim(data))
-    
-    workdir <- paste(getwd(), 'tmp', sep='/')
-    # workdir <- tempdir()
+    workdir <- tempdir()
     
     init_densne(data, workdir, no_dims, initial_dims, perplexity, theta, randseed, verbose, max_iter, 
                 dens_frac, dens_lambda, final_dens)
