@@ -86,8 +86,8 @@ read_result <- function(workdir) {
     close(connection)
     return(output)
 }
-run_densne <- function(data, no_dims, initial_dims, perplexity, theta, randseed, 
-                       verbose, max_iter, dens_frac, dens_lambda, final_dens) {     
+run_densne <- function(data, no_dims, perplexity, theta, randseed, 
+                       verbose, initial_dims, use_pca, max_iter, dens_frac, dens_lambda, final_dens) {     
     if(missing(no_dims)) { 
         no_dims <- 2
     }
@@ -101,10 +101,13 @@ run_densne <- function(data, no_dims, initial_dims, perplexity, theta, randseed,
         randseed <- -1
     }
     if(missing(verbose)) { 
-        verbose <- TRUE
+        verbose <- FALSE
     }
     if(missing(initial_dims)) { 
         initial_dims <- dim(data)[[2]]
+    }
+    if(missing(use_pca)) { 
+        use_pca <- FALSE
     }
     if(missing(max_iter)) { 
         max_iter <- 1000
@@ -118,7 +121,19 @@ run_densne <- function(data, no_dims, initial_dims, perplexity, theta, randseed,
     if(missing(final_dens)) { 
         final_dens <- FALSE
     }
-
+    
+    if(initial_dims < dim(data)[2]) { 
+        if(use_pca) { 
+            pca_out <- prcomp(data, center=TRUE, scale=TRUE, retx=TRUE)
+            data <- pca_out$x[,1:initial_dims]
+        }
+        else { 
+            data <- data[,1:initial_dims]
+        }
+    }
+    
+    print(dim(data))
+    
     workdir <- paste(getwd(), 'tmp', sep='/')
     # workdir <- tempdir()
     
