@@ -977,20 +977,6 @@ bool DENSNE::load_data(double** data, int* n, int* d, int* no_dims, double* thet
 
   fread(&flag, sizeof(char),1,h);               // Initial embedding provided
   bool init_emb_flag = flag != 0;
-  
-  /*
-  int flag;
-  fread(&flag, sizeof(int),1,h);               // whether to output final densities
-  *final_dens = (flag != 0);
-
-  fread(&flag, sizeof(int),1,h);               // Initial embedding provided
-  bool init_emb_flag = flag != 0;
-  */
-  printf("Flags: %f, %f, %i, %i (true  is %i, false is %i)\n",
-	 *dens_frac, *dens_lambda, *final_dens, init_emb_flag, true, false);
-
-
-  printf("Sizeof: int, %i ; double, %i ; char, %i\n", sizeof(int), sizeof(double), sizeof(char)); 
   *data = (double*) malloc(*d * *n * sizeof(double));
   if(*data == NULL) { printf("Memory allocation failed!\n"); exit(1); }
   fread(*data, sizeof(double), *n * *d, h);                               // the data
