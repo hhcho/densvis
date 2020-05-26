@@ -15,7 +15,8 @@ The executable will be called `den_sne`.
 
 ## Usage
 
-The code comes with wrappers for Matlab and Python. These wrappers write your data to a file called `data.dat`, run the `den_sne` binary, and read the result file `result.dat` that the binary produces. 
+The code comes with wrappers for Python, Matlab, and R. These wrappers write your data to a file called `data.dat`, run the `den_sne` binary, and read the result file `result.dat` that the binary produces. For all the wrappers, the above 
+code needs to be run to compile the C++ executable. 
 
 ### Example usage in Python:
 
@@ -62,11 +63,29 @@ dens_frac = 0.3; dens_lambda = 0.1; final_dens = true;
 gscatter(embedding(:,1), embedding(:,2), labels); 
 ```
 
-The parameteres in Matlab are the same as in Python; the additional parameter `alg` determines
+The parameters in Matlab are the same as in Python; the additional parameter `alg` determines
 which preprocessing transform is done when `initial_dims` is smaller than the dimensionality
 of the input data. It can take values "svd" (for a singular
 value decomposition, default), "eig" (eigenvalue decomposition"), or "als" (alternating least 
 squares); see [Matlab documentation](https://www.mathworks.com/help/stats/pca.html "PCA"). 
+
+### Example usage in R
+
+```R
+# MNIST Subsample dataset
+data <- data.table::fread("http://cb.csail.mit.edu/cb/densvis/datasets/mnist_subsample.txt", sep=" ")
+# For a smaller dataset, download `trial_data.txt' in this repo
+data <- read.table("trial_data.txt", sep=" ")
+
+source("densne.R")
+
+out <- run_densne(data, no_dims=2, perplexity=50, theta=0.5, rand_seed=-1,
+                  verbose=False, initial_dims=None, use_pca=FALSE,
+                  max_iter=1000, dens_frac=0.3, final_dens=TRUE)
+```
+The parameters in R are the same as in Python. If `final_dens` is true, `out` will be a list, where
+`out[[1]]` contains the embedding, `out[[2]]` is the original local radius, and `out[[3]]` the embedding
+local radius. If `final_dens` is false, then `out` contains the embedding.
 
 ### Input arguments
 
