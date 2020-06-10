@@ -42,9 +42,9 @@ configuration = {
     'cmdclass' : {},
     'test_suite' : 'nose.collector',
     'tests_require' : ['nose'],
-    'package_data' : {'densmap-learn' : ['trial_data.txt']}, 
+    'package_data' : {'densmap-learn' : ['densmap/trial_data.txt']}, 
     'include_package_data' : True, 
-    'data_files' : (['trial_data.txt'])
+    'data_files' : (['densmap/trial_data.txt'])
     }
 
 setup(**configuration)
