@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
     
 configuration = {
     'name' : 'densmap-learn',
-    'version': '0.2.0',
+    'version': '0.2.1',
     'description' : 'densMAP',
     'long_description' : long_description,
     'long_description_content_type' : "text/markdown",
