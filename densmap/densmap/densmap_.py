@@ -1783,17 +1783,32 @@ class densMAP(BaseEstimator):
                 self.verbose,
             )
 
-            self._search_graph = scipy.sparse.lil_matrix(
-                (X.shape[0], X.shape[0]), dtype=np.int8
-            )
-            self._search_graph.rows = self._knn_indices
-            self._search_graph.data = (
-                self._knn_dists != 0
-            ).astype(np.int8)
-            self._search_graph = self._search_graph.maximum(
-                self._search_graph.transpose()
-            ).tocsr()
+            # self._search_graph = scipy.sparse.lil_matrix(
+            #     (X.shape[0], X.shape[0]), dtype=np.int8
+            # )
+            # self._search_graph.rows = self._knn_indices
+            # self._search_graph.data = (
+            #     self._knn_dists != 0
+            # ).astype(np.int8)
+            # self._search_graph = self._search_graph.maximum(
+            #     self._search_graph.transpose()
+            # ).tocsr()
+            
+            print("LIL TEST!!!!")
+            knn_data = (self._knn_dists != 0).astype(np.int8)
+            
+            indices = []
+            indptr = [0]
+            data = []
 
+            for i, row in enumerate(self._knn_indices):
+                d = list(knn_data[i])
+                indices += list(row)
+                indptr += [indptr[-1] + len(row)]
+                data += d
+            self._search_graph = scipy.sparse.csr_matrix((data, indices, indptr))
+            self._search_graph = self._search_graph.maximum(self._search_graph.transpose())
+            
             if callable(self.metric):
                 self._distance_func = self.metric
             elif self.metric in dist.named_distances:
