@@ -1783,18 +1783,6 @@ class densMAP(BaseEstimator):
                 self.verbose,
             )
 
-            # self._search_graph = scipy.sparse.lil_matrix(
-            #     (X.shape[0], X.shape[0]), dtype=np.int8
-            # )
-            # self._search_graph.rows = self._knn_indices
-            # self._search_graph.data = (
-            #     self._knn_dists != 0
-            # ).astype(np.int8)
-            # self._search_graph = self._search_graph.maximum(
-            #     self._search_graph.transpose()
-            # ).tocsr()
-            
-            print("LIL TEST!!!!")
             knn_data = (self._knn_dists != 0).astype(np.int8)
             
             indices = []
