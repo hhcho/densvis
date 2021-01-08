@@ -3,6 +3,8 @@
 This software package contains an implementation of density-preserving data visualization tool **densMAP**, which augments the [UMAP](https://github.com/lmcinnes/umap) algorithm (based on v0.3.10).
 Some of the following instructions are adapted from the UMAP repository.
 
+<b>Note: densMAP is now available as part of the Python [UMAP](https://github.com/lmcinnes/umap) package.</b>
+
 ## Installation
 densMAP shares the same dependencies as UMAP, including:
 
