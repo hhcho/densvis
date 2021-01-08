@@ -15,6 +15,8 @@ Our algorithms are described in the following preprint:
 Ashwin Narayan, Bonnie Berger\*, and Hyunghoon Cho\*. "Density-Preserving Data Visualization Unveils Dynamic Patterns of Single-Cell Transcriptomic Variability", *bioRxiv*, 2020.
 
 ## Notes
+<b>densMAP is now available as part of the Python [UMAP](https://github.com/lmcinnes/umap) package. </b>
+
 Our den-SNE software is based on the Barnes-Hut implementation of t-SNE (https://github.com/lvdmaaten/bhtsne) described in the following paper:
 
 Laurens Van Der Maaten. "Accelerating t-SNE using Tree-based Algorithms", *Journal of Machine Learning Research*, 15(1), 2014.
