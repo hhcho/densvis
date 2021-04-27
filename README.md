@@ -10,9 +10,13 @@ Direct links: [den-SNE](https://github.com/hhcho/densvis/tree/master/densne) and
 </p>
 
 ## Reference
-Our algorithms are described in the following preprint:
+Our algorithms are described in the following manuscript: 
 
-Ashwin Narayan, Bonnie Berger\*, and Hyunghoon Cho\*. "Density-Preserving Data Visualization Unveils Dynamic Patterns of Single-Cell Transcriptomic Variability", *bioRxiv*, 2020.
+Ashwin Narayan, Bonnie Berger\*, and Hyunghoon Cho\*, ["Assessing single-cell transcriptomic variability through density-preserving data visualization"](https://www.nature.com/articles/s41587-020-00801-7), *Nature Biotechnology*, 2021
+
+ and an earlier preprint:
+
+Ashwin Narayan, Bonnie Berger\*, and Hyunghoon Cho\*. ["Density-Preserving Data Visualization Unveils Dynamic Patterns of Single-Cell Transcriptomic Variability"](https://www.biorxiv.org/content/10.1101/2020.05.12.077776v1), *bioRxiv*, 2020.
 
 ## Notes
 <b>densMAP is now available as part of the Python [UMAP](https://github.com/lmcinnes/umap) package. </b>
